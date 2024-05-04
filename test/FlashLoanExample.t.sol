@@ -39,19 +39,20 @@ contract CounterTest is Test {
         //select the fork thus obtained, using its id
         vm.selectFork(mainnetFork);
         //deploy FlashLoanExample to the created fork with POOL_ADDRESS_PROVIDER as its constructor argument
-        flashLoanExample = FlashLoanExample(address(POOL_ADDRESS_PROVIDER));
+        flashLoanExample = FlashLoanExample(POOL_ADDRESS_PROVIDER);
         //fetch the DAI contract
         token = IERC20(DAI);
     }
 
     function testTakeAndReturnLoan() public {
 
-        uint BALANCE_AMOUNT_DAI = 2000 ether;
         // Get 2000 DAI in our contract by using deal
         // deal is a cheatcode that lets us arbitrarily set the balance of any address and works with most ERC-20 tokens
-        deal(DAI, address(flashLoanExample), BALANCE_AMOUNT_DAI);
+        uint BALANCE_AMOUNT_DAI = 2000 ether;
+        deal(DAI, address(flashLoanExample), BALANCE_AMOUNT_DAI, true);
 
         console.log(token.balanceOf(address(flashLoanExample)));
+        console.log(address(flashLoanExample));
         
         flashLoanExample.createFlashLoan(DAI, 10000);
 
