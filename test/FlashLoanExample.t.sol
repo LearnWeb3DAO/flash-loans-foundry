@@ -47,14 +47,13 @@ contract CounterTest is Test {
     function testTakeAndReturnLoan() public {
 
         uint BALANCE_AMOUNT_DAI = 2000 ether;
-        // Move 2000 DAI from DAI_WHALE to our contract by using deal
-        // deal is a cheatcode that lets us arbitrarily set the balance of any address
-        // it also lets us simulate a transaction from any address to any other address, and here, that is what we're using it for
+        // Get 2000 DAI in our contract by using deal
+        // deal is a cheatcode that lets us arbitrarily set the balance of any address and works with most ERC-20 tokens
         deal(DAI, address(flashLoanExample), BALANCE_AMOUNT_DAI);
 
         console.log(token.balanceOf(address(flashLoanExample)));
         
-        flashLoanExample.createFlashLoan(DAI, 1);
+        flashLoanExample.createFlashLoan(DAI, 10000);
 
         
         uint remainingBalance = token.balanceOf(address(flashLoanExample));
